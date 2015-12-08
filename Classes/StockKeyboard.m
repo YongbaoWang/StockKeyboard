@@ -100,7 +100,7 @@
         _textField = textField;
         _touchRect = CGRectZero;
         
-//        textField.inputView = self;
+        //        textField.inputView = self;
         
     }
     return self;
@@ -115,7 +115,7 @@
 }
 
 -(void)setKeyboardType:(KeyboardType)keyboardType{
-
+    
     _keyboardType = keyboardType;
     _touchRect = CGRectZero;
 }
@@ -182,7 +182,7 @@
             CGPoint point1 = CGPointMake(self.allBtnWidth, self.middleBtnHeight * (i + 1));
             CGPoint point2 = CGPointMake(kBoardWidth, self.middleBtnHeight * (i + 1));
             [self drawLine:context fromPoint:point1 toPoint:point2 lineColor:kLineGrayColor];
-
+            
         }
         
         [self fillSelectBtnColor:context];
@@ -207,10 +207,10 @@
             CGRect textRect = CGRectMake(kBoardWidth - self.allBtnWidth, self.rightBtnHeight * i, self.allBtnWidth, self.rightBtnHeight);
             [self drawTitle:context inRect:textRect title:title fontSize:kRightTitleFontSize];
         }
-
+        
         
     }else if(self.keyboardType == KeyboardTypeABC){
-    
+        
         [self.btnRectArrayM removeAllObjects];
         
         //设置键盘背景色
@@ -245,9 +245,9 @@
             [self drawTitle:context inRect:btnRect title:self.abcTitleArray[i + 10] fontSize:kMiddleTitleFontSize];
             
             [self.btnRectArrayM addObject:[NSValue valueWithCGRect:btnRect]];
-
+            
         }
-    
+        
         //字母(第三行)
         offset = kFunBtnInternalSpace;
         for (int i = 0; i < 7; i++) {
@@ -265,7 +265,7 @@
         [self drawTitle:context inRect:btnRect title:@"Del" fontSize:kRightTitleFontSize];
         
         [self.btnRectArrayM addObject:[NSValue valueWithCGRect:btnRect]];
-
+        
         //底部功能键
         for (int i = 0; i < self.funTitleArray.count; i++) {
             
@@ -274,7 +274,7 @@
             [self drawTitle:context inRect:btnRect title:self.funTitleArray[i] fontSize:kRightTitleFontSize];
             
             [self.btnRectArrayM addObject:[NSValue valueWithCGRect:btnRect]];
-
+            
         }
         
     }
@@ -284,7 +284,7 @@
 #pragma mark - Private Action
 //画直线
 - (void)drawLine:(CGContextRef)context fromPoint:(CGPoint)point1 toPoint:(CGPoint)point2 lineColor:(UIColor *)lineColor{
-
+    
     CGContextSetStrokeColorWithColor(context, lineColor.CGColor);
     CGContextSetLineWidth(context, kLineWidth);
     CGContextMoveToPoint(context, point1.x, point1.y);
@@ -294,20 +294,20 @@
 
 //填充矩形
 - (void)fillRect:(CGContextRef)context rect:(CGRect)rect fillColor:(UIColor *)fillColor{
-
+    
     CGContextSetFillColorWithColor(context, fillColor.CGColor);
     CGContextFillRect(context, rect);
 }
 
 //写入文字
 - (void)drawTitle:(CGContextRef)context inRect:(CGRect)rect title:(NSString *)title fontSize:(CGFloat)fontSize{
-
+    
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:fontSize],NSForegroundColorAttributeName:kTitleColor};
     CGRect titleRect = [title boundingRectWithSize:rect.size options:0 attributes:attributes context:nil];
     
     CGPoint originPoint = CGPointMake(CGRectGetMidX(rect) - titleRect.size.width/2, CGRectGetMidY(rect) - titleRect.size.height/2);
     [title drawAtPoint:originPoint withAttributes:attributes];
-
+    
 }
 
 //填充圆角矩形
@@ -339,11 +339,11 @@
 - (void)fillSelectBtnColor:(CGContextRef)context{
     
     if (!CGRectEqualToRect(self.touchRect, CGRectZero)) {
-
+        
         [self fillRect:context rect:self.touchRect fillColor:self.touchColor];
         self.touchRect = CGRectZero;
     }
-
+    
 }
 
 #pragma mark - UIResponder Action
@@ -351,6 +351,8 @@
     
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInView:self];
+    
+    [self playKeyboardSound];
     
     if (self.keyboardType == KeyboardTypeNumber) {
         
@@ -367,7 +369,7 @@
             
         }
         else if(touchPoint.x >=self.allBtnWidth && touchPoint.x <=(kBoardWidth - self.allBtnWidth)){
-        
+            
             int i = (touchPoint.x - self.allBtnWidth)/self.allBtnWidth;
             int j = touchPoint.y /self.middleBtnHeight;
             NSString *title = self.middleTitleArray[j * 3 + i];
@@ -382,7 +384,7 @@
             NSLog(@"%@",title);
         }
         else if(touchPoint.x > (kBoardWidth - self.allBtnWidth)){
-        
+            
             int j = touchPoint.y / self.rightBtnHeight;
             NSString *title = self.rightTitleArray[j];
             NSLog(@"%@",title);
@@ -410,7 +412,7 @@
         }
     }
     else if(self.keyboardType == KeyboardTypeABC){
-    
+        
         for (int i = 0; i < self.btnRectArrayM.count; i++) {
             
             CGRect btnRect = [(NSValue *)self.btnRectArrayM[i] CGRectValue];
@@ -453,7 +455,7 @@
                     
                     self.normalColor = kAreaDarkGrayColor;
                     self.touchColor = kAreaWhiteColor;
-
+                    
                 }
                 break;
                 
@@ -462,12 +464,7 @@
         
     }
     
-    if (!CGRectEqualToRect(self.touchRect, CGRectZero)) {
-        
-        [self playKeyboardSound];
-        [self setNeedsDisplay];
-
-    }
+    [self setNeedsDisplay];
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -487,24 +484,26 @@
 
 #pragma mark - Button Action
 /**
- *  数字键
+ *  数字键/字母键
  *
  *  @param title 数字
  */
 - (void)numberAction:(NSString *)title{
     
     self.textField.text = [NSString stringWithFormat:@"%@%@",self.textField.text,title];
-
+    
+    [self.textField sendActionsForControlEvents:UIControlEventEditingChanged];
 }
 
 /**
  *  删除键
  */
 - (void)backspaceAction{
-
+    
     NSString *txt = self.textField.text;
     if (txt.length > 0) {
         self.textField.text = [txt stringByReplacingCharactersInRange:NSMakeRange(txt.length - 1, 1) withString:@""];
+        [self.textField sendActionsForControlEvents:UIControlEventEditingChanged];
     }
 }
 
@@ -512,7 +511,7 @@
  *  隐藏键
  */
 - (void)hideAction{
-
+    
     [self.textField resignFirstResponder];
 }
 
@@ -522,6 +521,7 @@
 - (void)clearAction{
     
     self.textField.text = @"";
+    [self.textField sendActionsForControlEvents:UIControlEventEditingChanged];
 }
 
 /**
