@@ -7,11 +7,12 @@ Custom keyboard for stock app
 - If you **found a bug**, _and can provide steps to reliably reproduce it_, open an issue.
 - If you **have a feature request**, open an issue.
 - If you **want to contribute**, submit a pull request.
+- Contact me : wangyongbao2009@hotmail.com
 
 # Installation with CocoaPods
 
-[CocoaPods](https://cocoapods.org/) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like StockKeyboard in your projects. See the ["Getting Started" guide for more information]pod 
+[CocoaPods](https://cocoapods.org/) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like StockKeyboard in your projects. See the ["Getting Started" guide for more information]
 
-'StockKeyboard', '~> 0.0.1'
+pod 'StockKeyboard', '~> 0.0.1'
 
 
