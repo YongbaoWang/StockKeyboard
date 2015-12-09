@@ -15,4 +15,10 @@ Custom keyboard for stock app
 
 pod 'StockKeyboard', '~> 0.0.1'
 
+##Screenshot1
+![(Screenshot)](https://github.com/YongbaoWang/StockKeyboard/blob/master/KeyboardDemo/KeyboardDemo/abc.PNG)
+##Screenshot2
+![(Screenshot)](https://github.com/YongbaoWang/StockKeyboard/blob/master/KeyboardDemo/KeyboardDemo/number.PNG)
+
+
 
