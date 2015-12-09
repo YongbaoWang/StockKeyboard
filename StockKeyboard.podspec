@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "StockKeyboard"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "A custom keyboard for stock.Include ABC and Number board."
 
   s.description  = <<-DESC
@@ -34,7 +34,7 @@ Pod::Spec.new do |s|
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
   #  Licensing your code is important. See http://choosealicense.com for more info.
-  #  CocoaPods will detect a license file if there is a named LICENSE*
+    CocoaPods will detect a license file if there is a named LICENSE*
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
@@ -76,7 +76,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/YongbaoWang/StockKeyboard.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/YongbaoWang/StockKeyboard.git", :tag => "0.0.2" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
