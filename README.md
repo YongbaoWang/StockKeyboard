@@ -20,5 +20,6 @@ pod 'StockKeyboard', '~> 0.0.1'
 ##Screenshot2
 ![(Screenshot)](https://github.com/YongbaoWang/StockKeyboard/blob/master/KeyboardDemo/KeyboardDemo/number.PNG)
 
-
+#微信公众号 ：iOS狗
+![(WeChat)](https://github.com/YongbaoWang/EverShowPath/blob/master/EverShowPath/wechat_num.jpg)
 
